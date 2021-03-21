@@ -108,4 +108,51 @@ function totalCost(product){
 
 }
 
+
+function displayCart(){
+  let cartItems = localStorage.getItem('productsInCart');
+
+  cartItems = JSON.parse(cartItems);
+
+  let productContainer = document.querySelector('.products');
+  let cartCost = localStorage.getItem('totalCost');
+
+  // cartItems and productContainer diferent empty
+  if (cartItems && productContainer) {
+    console.log('runing')
+
+    productContainer.innerHTML = '';
+    Object.values(cartItems).map(item =>{
+    productContainer.innerHTML += `
+    <div class="product">
+      <i class="fas fa-times-circle"></i>
+      <img src="./imgs/${item.tag}.jpg">
+      <span>${item.name}</span>
+    </div>  
+    <div class="price">R$${item.price}</div>
+    <div class="quantity">
+      <i class="fas fa-chevron-circle-left"></i><span> ${item.inCart}</span><i class="fas fa-chevron-circle-right"></i>
+    </div>
+    <div class="total">
+      R$${item.inCart * item.price}
+    </div>
+    `;
+    });
+
+    productContainer.innerHTML += `
+        <div class="basketTotalContainer">
+          <h4 class="basketTotalTitle">
+            Basket Total
+          </h4>
+          <h4 class="basketTotal">
+              R$${cartCost}
+          </h4>
+        </div>
+    `;
+  }
+
+  console.log(cartItems)
+}
+
 onLoadCartNumbers();
+displayCart();
